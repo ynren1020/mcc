@@ -1,0 +1,222 @@
+---
+title: "Non-Compliance"
+author: "Yanan"
+date: "February 8, 2017"
+output: word_document
+---
+
+```{r, echo=FALSE}
+library(htmlTable)
+setwd("H:/Joe")
+dat<-read.csv("dataforyanan_20170208.csv",header = T,sep=",")
+head(dat)
+
+##subset for table 1##
+dat_t1<-dat[,c(1:3,21)]
+head(dat_t1)
+unique(dat_t1$treatment)
+length(dat_t1$treatment)
+
+##subset by group##
+##group E##
+dat_t1_E<-dat_t1[dat_t1$treatment=="E",]
+NE<-nrow(dat_t1_E)  ##34
+View(dat_t1_E)
+NE5<-nrow(dat_t1_E[dat_t1_E$EOS_5==5,]) ##32
+NE4<-NE-NE5
+PE5<-NE5/NE ##94%
+PE4<-NE4/NE  ##6%
+
+##group c##
+dat_t1_C<-dat_t1[dat_t1$treatment=="C",]
+NC<-nrow(dat_t1_C)  ##34
+View(dat_t1_C)
+NC5<-nrow(dat_t1_C[dat_t1_C$EOS_5==5,]) ##32
+NC4<-NC-NC5
+PC5<-NC5/NC
+PC4<-NC4/NC
+
+##group F##
+dat_t1_F<-dat_t1[dat_t1$treatment=="F",]
+NF<-nrow(dat_t1_F)  ##40
+View(dat_t1_F)
+NF5<-nrow(dat_t1_F[dat_t1_F$EOS_5==5,]) ##33
+NF4<-nrow(dat_t1_F[dat_t1_F$EOS_5==4,]) ##6
+NF3<-nrow(dat_t1_F[dat_t1_F$EOS_5==3,]) ##1
+PF5<-NF5/NF
+PF4<-NF4/NF
+PF3<-NF3/NF
+
+##group A##
+dat_t1_A<-dat_t1[dat_t1$treatment=="A",]
+NAtotal<-nrow(dat_t1_A)  ##33
+View(dat_t1_A)
+NA5<-nrow(dat_t1_A[dat_t1_A$EOS_5==5,]) ##25
+NA4<-nrow(dat_t1_A[dat_t1_A$EOS_5==4,]) ##8
+#NA3<-nrow(dat_t1_A[dat_t1_A$EOS_5==3,]) ##1
+PA5<-NA5/NAtotal
+PA4<-NA4/NAtotal
+#PA3<-NA3/NAtotal
+
+##group D##
+dat_t1_D<-dat_t1[dat_t1$treatment=="D",]
+ND<-nrow(dat_t1_D)  ##34
+View(dat_t1_D)
+ND5<-nrow(dat_t1_D[dat_t1_D$EOS_5==5,]) ##28
+ND4<-nrow(dat_t1_D[dat_t1_D$EOS_5==4,]) ##6
+#ND3<-nrow(dat_t1_D[dat_t1_D$EOS_5==3,]) ##1
+PD5<-ND5/ND
+PD4<-ND4/ND
+#PD3<-ND3/ND
+
+##group B&G##
+dat_t1_BG<-dat_t1[dat_t1$treatment=="B"|dat_t1$treatment=="G",]
+NBG<-nrow(dat_t1_BG)  ##
+View(dat_t1_BG)
+NBG5<-nrow(dat_t1_BG[dat_t1_BG$EOS_5==5,]) ##65
+NBG4<-nrow(dat_t1_BG[dat_t1_BG$EOS_5==4,]) ##11
+NBG3<-nrow(dat_t1_BG[dat_t1_BG$EOS_5==3,]) ##1
+PBG5<-NBG5/NBG
+PBG4<-NBG4/NBG
+PBG3<-NBG3/NBG
+
+t1<-matrix()
+
+```
+
+
+##table2##
+```{r, echo=FALSE}
+##subset for table 2##
+dat_t2<-dat[,c(1:3,9,11,13,15,17,19)]
+head(dat_t2)
+unique(dat_t2$treatment)
+length(dat_t2$treatment)
+dat_t2$sum_non_study_cpd<-rowSums(dat[,c(9,11,13,15,17,19)])
+View(dat_t2)
+##subset by group##
+##group E##
+dat_t2_E<-dat_t2[dat_t2$treatment=="E",]
+NEt2<-nrow(dat_t2_E)  ##34
+View(dat_t2_E)
+NEcomp<-nrow(dat_t2_E[dat_t2_E$sum_non_study_cpd==0,]) ##24
+PEcomp<-round(NEcomp/NEt2,2) ##0.71
+NEnoncomp<-NEt2-NEcomp  ##10
+PEnoncomp<-round(NEnoncomp/NEt2,2) ##0.29
+
+##group c##
+dat_t2_C<-dat_t2[dat_t2$treatment=="C",]
+NCt2<-nrow(dat_t2_C)  ##34
+View(dat_t2_C)
+NCcomp<-nrow(dat_t2_C[dat_t2_C$sum_non_study_cpd==0,]) ##17
+PCcomp<-NCcomp/NCt2 ##50%
+NCnoncomp<-NCt2-NCcomp ##17
+PCnoncomp<-NCnoncomp/NCt2
+
+
+##group F##
+dat_t2_F<-dat_t2[dat_t2$treatment=="F",]
+NF<-nrow(dat_t2_F)  ##40
+View(dat_t2_F)
+NFcomp<-nrow(dat_t2_F[dat_t2_F$sum_non_study_cpd==0,]) ##8
+PFcomp<-NFcomp/NF ##20%
+NFnoncomp<-NF-NFcomp ##32
+PFnoncomp<-NFnoncomp/NF ##80%
+
+##group A##
+dat_t2_A<-dat_t2[dat_t2$treatment=="A",]
+NAtotal<-nrow(dat_t2_A)  ##33
+View(dat_t2_A)
+NAcomp<-nrow(dat_t2_A[dat_t2_A$sum_non_study_cpd==0,]) ##6
+PAcomp<-NAcomp/NAtotal ##18%
+NAnoncomp<-NAtotal-NAcomp ##27
+PAnoncomp<-NAnoncomp/NAtotal ##82%
+
+##group D##
+dat_t2_D<-dat_t2[dat_t2$treatment=="D",]
+ND<-nrow(dat_t2_D)  ##34
+View(dat_t2_D)
+NDcomp<-nrow(dat_t2_D[dat_t2_D$sum_non_study_cpd==0,]) ##7
+PDcomp<-NDcomp/ND ##21%
+NDnoncomp<-ND-NDcomp ##27
+PDnoncomp<-NDnoncomp/ND ##79%
+
+##group B&G##
+dat_t2_BG<-dat_t2[dat_t2$treatment=="B"|dat_t2$treatment=="G",]
+NBG<-nrow(dat_t2_BG)  ##
+View(dat_t2_BG)
+NBGcomp<-nrow(dat_t2_BG[dat_t2_BG$sum_non_study_cpd==0,]) ##18
+PBGcomp<-NBGcomp/NBG ##23%
+NBGnoncomp<-NBG-NBGcomp ##59
+PBGnoncomp<-NBGnoncomp/NBG ##77%
+```
+
+##table 3 and 4##
+```{r,echo=FALSE}
+dat_t3<-dat[,c(1:3,23:33)]
+head(dat_t3)
+View(dat_t3)
+t3<-sapply(dat[,23:33],sum,na.rm=T)
+
+dat_t3_E<-dat_t3[dat_t3$treatment=="E",]
+View(dat_t3_E)
+t4<-sapply(dat_t3_E[,4:14],sum,na.rm=T)
+
+##table 5##
+dat_t3_C<-dat_t3[dat_t3$treatment=="C",]
+View(dat_t3_C)
+t5C<-sapply(dat_t3_C[,4:14],sum,na.rm=T)
+
+dat_t3_F<-dat_t3[dat_t3$treatment=="F",]
+View(dat_t3_F)
+t5F<-sapply(dat_t3_F[,4:14],sum,na.rm=T)
+
+dat_t3_A<-dat_t3[dat_t3$treatment=="A",]
+View(dat_t3_A)
+t5A<-sapply(dat_t3_A[,4:14],sum,na.rm=T)
+
+dat_t3_D<-dat_t3[dat_t3$treatment=="D",]
+View(dat_t3_D)
+t5D<-sapply(dat_t3_D[,4:14],sum,na.rm=T)
+
+dat_t3_BG<-dat_t3[dat_t3$treatment=="B"|dat_t3$treatment=="G",]
+View(dat_t3_BG)
+t5BG<sapply(dat_t3_BG[,4:14],sum,na.rm=T)
+```
+
+##table 6##
+```{r, echo=FALSE}
+dat_t6<-dat[,c(1:4,23:33)]
+head(dat_t6)
+View(dat_t6)
+
+dat_t6_m<-dat_t6[dat_t6$Demo_3_SCR==1,]
+View(dat_t6_m)
+t6m<-sapply(dat_t6_m[,5:15],sum,na.rm=T)
+t6mp<-round(t6m/161,2)*100
+
+dat_t6_f<-dat_t6[dat_t6$Demo_3_SCR==2,]
+View(dat_t6_f)
+t6f<-sapply(dat_t6_f[,5:15],sum,na.rm=T)
+t6fp<-round(t6f/161,2)*100
+
+```
+
+##table7##
+```{r, echo=FALSE}
+dat_t7<-dat[,c(1:5,23:33)]
+head(dat_t7)
+View(dat_t7)
+
+median(dat_t7$Demo_2_1_TEXT_SCR) ##44
+
+dat_t7_low<-dat_t7[dat_t7$Demo_2_1_TEXT_SCR<=44,]
+View(dat_t7_low)
+t7l<-sapply(dat_t7_low[,6:16],sum,na.rm=T)
+t7lp<-round(t7l/130,2)*100
+
+dat_t7_high<-dat_t7[dat_t7$Demo_2_1_TEXT_SCR>44,]
+View(dat_t7_high)
+t7h<-sapply(dat_t7_high[,6:16],sum,na.rm=T)
+t7hp<-round(t7h/122,2)*100
+```

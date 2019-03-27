@@ -1,0 +1,330 @@
+---
+title: "noncomp0215"
+author: "Yanan"
+date: "February 15, 2017"
+output: word_document
+---
+##for N=237##
+```{r setup, include=FALSE}
+library(dplyr)
+setwd("H:/Joe")
+dat<-read.csv("dataforyanan_20170208.csv",header = T,sep=",")
+head(dat)
+
+##subset by date#
+class(dat$eos_date)
+dat$eos_date<-as.Date(dat$eos_date,"%m/%d/%Y")
+dat_before<-subset(dat,eos_date < as.Date("2014-07-08"))
+View(dat_before)
+
+##subset for table 1##
+dat_t1<-dat_before[,c(1:3,21)]
+head(dat_t1)
+unique(dat_t1$treatment)
+length(dat_t1$treatment)
+View(dat_t1)
+##subset by group##
+##group E##
+dat_t1_E<-dat_t1[dat_t1$treatment=="E",]
+NE<-nrow(dat_t1_E)  ##33
+View(dat_t1_E)
+NE5<-nrow(dat_t1_E[dat_t1_E$EOS_5==5,]) ##31
+NE4<-NE-NE5
+PE5<-paste(round(NE5/NE,2)*100,"%",sep="") ##94%
+PE4<-paste(round(NE4/NE,2)*100,"%",sep="")  ##6%
+GE5<-paste(NE5,"(",PE5,")",sep="")
+GE4<-paste(NE4,"(",PE4,")",sep="")
+GE<-c("Group E Usual Brand N=33",GE5,GE4," "," "," ")
+##group c##
+dat_t1_C<-dat_t1[dat_t1$treatment=="C",]
+NC<-nrow(dat_t1_C)  ##33
+View(dat_t1_C)
+NC5<-nrow(dat_t1_C[dat_t1_C$EOS_5==5,]) ##31
+NC4<-NC-NC5  #2
+PC5<-paste(round(NC5/NC,2)*100,"%",sep="")
+PC4<-paste(round(NC4/NC,2)*100,"%",sep="")
+GC5<-paste(NC5,"(",PC5,")",sep="")
+GC4<-paste(NC4,"(",PC4,")",sep="")
+GC<-c("Group C 15.8 mg/g N=33",GC5,GC4," "," "," ")
+##group F##
+dat_t1_F<-dat_t1[dat_t1$treatment=="F",]
+NF<-nrow(dat_t1_F)  ##35
+View(dat_t1_F)
+NF5<-nrow(dat_t1_F[dat_t1_F$EOS_5==5,]) ##33
+NF4<-nrow(dat_t1_F[dat_t1_F$EOS_5==4,]) ##6
+#NF3<-nrow(dat_t1_F[dat_t1_F$EOS_5==3,]) ##1
+PF5<-paste(round(NF5/NF,2)*100,"%",sep="")
+PF4<-paste(round(NF4/NF,2)*100,"%",sep="")
+#PF3<-paste(round(NF3/NF,2)*100,"%",sep="")
+GF5<-paste(NF5,"(",PF5,")",sep="")
+GF4<-paste(NF4,"(",PF4,")",sep="")
+GF<-c("Group F 5.2 mg/g N=35",GF5,GF4," "," "," ")
+
+##group A##
+dat_t1_A<-dat_t1[dat_t1$treatment=="A",]
+NAtotal<-nrow(dat_t1_A)  ##30
+View(dat_t1_A)
+NA5<-nrow(dat_t1_A[dat_t1_A$EOS_5==5,]) ##23
+NA4<-nrow(dat_t1_A[dat_t1_A$EOS_5==4,]) ##7
+#NA3<-nrow(dat_t1_A[dat_t1_A$EOS_5==3,]) ##1
+PA5<-paste(round(NA5/NAtotal,2)*100,"%",sep="")
+PA4<-paste(round(NA4/NAtotal,2)*100,"%",sep="")
+#PA3<-NA3/NAtotal
+GA5<-paste(NA5,"(",PA5,")",sep="")
+GA4<-paste(NA4,"(",PA4,")",sep="")
+GA<-c("Group A 2.4 mg/g N=30",GA5,GA4," "," "," ")
+##group D##
+dat_t1_D<-dat_t1[dat_t1$treatment=="D",]
+ND<-nrow(dat_t1_D)  ##33
+View(dat_t1_D)
+ND5<-nrow(dat_t1_D[dat_t1_D$EOS_5==5,]) ##28
+ND4<-nrow(dat_t1_D[dat_t1_D$EOS_5==4,]) ##6
+#ND3<-nrow(dat_t1_D[dat_t1_D$EOS_5==3,]) ##1
+PD5<-paste(round(ND5/ND,2)*100,"%",sep="")
+PD4<-paste(round(ND4/ND,2)*100,"%",sep="")
+#PD3<-ND3/ND
+GD5<-paste(ND5,"(",PD5,")",sep="")
+GD4<-paste(ND4,"(",PD4,")",sep="")
+GD<-c("Group D 1.3 mg/g N=33",GD5,GD4," "," "," ")
+##group B&G##
+dat_t1_BG<-dat_t1[dat_t1$treatment=="B"|dat_t1$treatment=="G",]
+NBG<-nrow(dat_t1_BG)  ##
+View(dat_t1_BG)
+NBG5<-nrow(dat_t1_BG[dat_t1_BG$EOS_5==5,]) ##62
+NBG4<-nrow(dat_t1_BG[dat_t1_BG$EOS_5==4,]) ##10
+NBG3<-nrow(dat_t1_BG[dat_t1_BG$EOS_5==3,]) ##1
+PBG5<-paste(round(NBG5/NBG,2)*100,"%",sep="")
+PBG4<-paste(round(NBG4/NBG,2)*100,"%",sep="")
+PBG3<-paste(round(NBG3/NBG,2)*100,"%",sep="")
+GBG5<-paste(NBG5,"(",PBG5,")",sep="")
+GBG4<-paste(NBG4,"(",PBG4,")",sep="")
+GBG3<-paste(NBG3,"(",PBG3,")",sep="")
+GBG<-c("Groups B&G 0.4 mg/g N=73",GBG5,GBG4,GBG3," "," ")
+Group<-c("Group","Very Honest","Somewhat Honest","Neutral","Somewhat Dishonest","Very Dishonest")
+t1<-matrix(cbind(Group,GE,GC,GF,GA,GD,GBG),ncol=7)
+write.table(t1, "H:/Joe/table1.txt", sep = ",", quote=F, eol = "\n", na = "", row.names = FALSE, col.names = FALSE)
+
+```
+
+
+##table2##
+```{r, echo=FALSE}
+##subset for table 2##
+dat_t2<-dat_before[,c(1:3,9,11,13,15,17,19)]
+head(dat_t2)
+unique(dat_t2$treatment)
+length(dat_t2$treatment)
+dat_t2$sum_non_study_cpd<-rowSums(dat_before[,c(9,11,13,15,17,19)])
+View(dat_t2)
+##subset by group##
+##group E##
+dat_t2_E<-dat_t2[dat_t2$treatment=="E",]
+NEt2<-nrow(dat_t2_E)  ##33
+View(dat_t2_E)
+NEcomp<-nrow(dat_t2_E[dat_t2_E$sum_non_study_cpd==0,]) ##23
+PEcomp<-paste(round(NEcomp/NEt2,2)*100,"%",sep="") ##0.71
+NEnoncomp<-NEt2-NEcomp  ##10
+PEnoncomp<-paste(round(NEnoncomp/NEt2,2)*100,"%",sep="")
+GEcomp<-paste(NEcomp,"(",PEcomp,")",sep="")
+GEnoncomp<-paste(NEnoncomp,"(",PEnoncomp,")",sep="")
+GEt2<-c("Group E Usual Brand N=33",GEcomp,GEnoncomp)
+##group c##
+dat_t2_C<-dat_t2[dat_t2$treatment=="C",]
+NCt2<-nrow(dat_t2_C)  ##34
+View(dat_t2_C)
+NCcomp<-nrow(dat_t2_C[dat_t2_C$sum_non_study_cpd==0,]) ##17
+PCcomp<-paste(round(NCcomp/NCt2,2)*100,"%",sep="") ##50%
+NCnoncomp<-NCt2-NCcomp ##17
+PCnoncomp<-paste(round(NCnoncomp/NCt2,2)*100,"%",sep="")
+GCcomp<-paste(NCcomp,"(",PCcomp,")",sep="")
+GCnoncomp<-paste(NCnoncomp,"(",PCnoncomp,")",sep="")
+GCt2<-c("Group C 15.8 mg/g N=33",GCcomp,GCnoncomp)
+
+##group F##
+dat_t2_F<-dat_t2[dat_t2$treatment=="F",]
+NF<-nrow(dat_t2_F)  ##40
+View(dat_t2_F)
+NFcomp<-nrow(dat_t2_F[dat_t2_F$sum_non_study_cpd==0,]) ##8
+PFcomp<-paste(round(NFcomp/NF,2)*100,"%",sep="") ##20%
+NFnoncomp<-NF-NFcomp ##32
+PFnoncomp<-paste(round(NFnoncomp/NF,2)*100,"%",sep="") ##80%
+GFcomp<-paste(NFcomp,"(",PFcomp,")",sep="")
+GFnoncomp<-paste(NFnoncomp,"(",PFnoncomp,")",sep="")
+GFt2<-c("Group F 5.2 mg/g N=35",GFcomp,GFnoncomp)
+##group A##
+dat_t2_A<-dat_t2[dat_t2$treatment=="A",]
+NAtotal<-nrow(dat_t2_A)  ##33
+View(dat_t2_A)
+NAcomp<-nrow(dat_t2_A[dat_t2_A$sum_non_study_cpd==0,]) ##6
+PAcomp<-paste(round(NAcomp/NAtotal,2)*100,"%",sep="") ##18%
+NAnoncomp<-NAtotal-NAcomp ##27
+PAnoncomp<-paste(round(NAnoncomp/NAtotal,2)*100,"%",sep="") ##82%
+
+GAcomp<-paste(NAcomp,"(",PAcomp,")",sep="")
+GAnoncomp<-paste(NAnoncomp,"(",PAnoncomp,")",sep="")
+GAt2<-c("Group A 2.4 mg/g N=30",GAcomp,GAnoncomp)
+##group D##
+dat_t2_D<-dat_t2[dat_t2$treatment=="D",]
+ND<-nrow(dat_t2_D)  ##34
+View(dat_t2_D)
+NDcomp<-nrow(dat_t2_D[dat_t2_D$sum_non_study_cpd==0,]) ##7
+PDcomp<-paste(round(NDcomp/ND,2)*100,"%",sep="") ##21%
+NDnoncomp<-ND-NDcomp ##27
+PDnoncomp<-paste(round(NDnoncomp/ND,2)*100,"%",sep="") ##79%
+
+GDcomp<-paste(NDcomp,"(",PDcomp,")",sep="")
+GDnoncomp<-paste(NDnoncomp,"(",PDnoncomp,")",sep="")
+GDt2<-c("Group D 1.3 mg/g N=33",GDcomp,GDnoncomp)
+##group B&G##
+dat_t2_BG<-dat_t2[dat_t2$treatment=="B"|dat_t2$treatment=="G",]
+NBG<-nrow(dat_t2_BG)  ##
+View(dat_t2_BG)
+NBGcomp<-nrow(dat_t2_BG[dat_t2_BG$sum_non_study_cpd==0,]) ##18
+PBGcomp<-paste(round(NBGcomp/NBG,2)*100,"%",sep="") ##23%
+NBGnoncomp<-NBG-NBGcomp ##59
+PBGnoncomp<-paste(round(NBGnoncomp/NBG,2)*100,"%",sep="") ##77%
+
+GBGcomp<-paste(NBGcomp,"(",PBGcomp,")",sep="")
+GBGnoncomp<-paste(NBGnoncomp,"(",PBGnoncomp,")",sep="")
+GBGt2<-c("Group B&G 0.4 mg/g N=73",GBGcomp,GBGnoncomp)
+
+Group_t2<-c("Group","No-Non Study Cigarettes (Compliance)","Non-Study Cigarette Use (Non-Compliance)")
+
+t2<-matrix(cbind(Group_t2,GEt2,GCt2,GFt2,GAt2,GDt2,GBGt2),ncol=7)
+write.table(t2, "H:/Joe/table2.txt", sep = ",", quote=F, eol = "\n", na = "", row.names = FALSE, col.names = FALSE)
+```
+
+
+##table 3 4 5##
+```{r,echo=FALSE}
+dat_t3<-dat_before[,c(1:3,23:33)]
+head(dat_t3)
+View(dat_t3)
+t3<-sapply(dat_before[,23:33],sum,na.rm=T)
+situation<-c("Situation","First cigarette of the day","After a meal","When craving a cigarette","When drinking alcohol","With other smokers","When stressed","No particular reason","At regular intervals","Other","When drinking caffeine","I never smoked non-SC")
+t3_endorse<-c("# of endorsements",102,83,46,45,36,26,24,22,17,13,60)
+table3<-matrix(cbind(situation,t3_endorse),ncol=2)
+write.table(table3, "H:/Joe/table3.txt", sep = ",", quote=F, eol = "\n", na = "", row.names = FALSE, col.names = FALSE)
+
+##table4##
+dat_t3_E<-dat_t3[dat_t3$treatment=="E",]
+View(dat_t3_E)
+t4<-sapply(dat_t3_E[,4:14],sum,na.rm=T)
+t4_endorse<-c("# of endorsement",6,4,1,3,3,0,0,1,2,0,24)
+table4<-matrix(cbind(situation,t4_endorse),ncol=2)
+write.table(table4, "H:/Joe/table4.txt", sep = ",", quote=F, eol = "\n", na = "", row.names = FALSE, col.names = FALSE)
+
+##table 5##
+dat_t3_C<-dat_t3[dat_t3$treatment=="C",]
+View(dat_t3_C)
+t5C<-sapply(dat_t3_C[,4:14],sum,na.rm=T)
+t5Creorder<-c(t5C[1],t5C[6],t5C[7],t5C[4],t5C[2],t5C[3],t5C[9],t5C[8],t5C[10],t5C[5],t5C[11])
+t5CP<-paste(round(t5Creorder/nrow(dat_t3_C),2)*100,"%",sep="")
+t5Ctotal<-paste(t5Creorder,"/",nrow(dat_t3_C),sep=""
+)
+t5Cfinal<-paste(t5Ctotal,"(",t5CP,")",sep="")
+GCt5<-c("Group C 15.8 mg/g N=33",t5Cfinal)
+
+
+dat_t3_F<-dat_t3[dat_t3$treatment=="F",]
+View(dat_t3_F)
+t5F<-sapply(dat_t3_F[,4:14],sum,na.rm=T)
+t5Freorder<-c(t5F[1],t5F[6],t5F[7],t5F[4],t5F[2],t5F[3],t5F[9],t5F[8],t5F[10],t5F[5],t5F[11])
+t5FP<-paste(round(t5Freorder/nrow(dat_t3_F),2)*100,"%",sep="")
+t5Ftotal<-paste(t5Freorder,"/",nrow(dat_t3_F),sep=""
+)
+t5Ffinal<-paste(t5Ftotal,"(",t5FP,")",sep="")
+GFt5<-c("Group F 5.2 mg/g N=35",t5Ffinal)
+
+dat_t3_A<-dat_t3[dat_t3$treatment=="A",]
+View(dat_t3_A)
+t5A<-sapply(dat_t3_A[,4:14],sum,na.rm=T)
+t5Areorder<-c(t5A[1],t5A[6],t5A[7],t5A[4],t5A[2],t5A[3],t5A[9],t5A[8],t5A[10],t5A[5],t5A[11])
+t5AP<-paste(round(t5Areorder/nrow(dat_t3_A),2)*100,"%",sep="")
+t5Atotal<-paste(t5Areorder,"/",nrow(dat_t3_A),sep=""
+)
+t5Afinal<-paste(t5Atotal,"(",t5AP,")",sep="")
+GAt5<-c("Group A 2.4 mg/g N=30",t5Afinal)
+
+
+dat_t3_D<-dat_t3[dat_t3$treatment=="D",]
+View(dat_t3_D)
+t5D<-sapply(dat_t3_D[,4:14],sum,na.rm=T)
+t5Dreorder<-c(t5D[1],t5D[6],t5D[7],t5D[4],t5D[2],t5D[3],t5D[9],t5D[8],t5D[10],t5D[5],t5D[11])
+t5DP<-paste(round(t5Dreorder/nrow(dat_t3_D),2)*100,"%",sep="")
+t5Dtotal<-paste(t5Dreorder,"/",nrow(dat_t3_D),sep=""
+)
+t5Dfinal<-paste(t5Dtotal,"(",t5DP,")",sep="")
+GDt5<-c("Group D 1.3 mg/g N=33",t5Dfinal)
+
+dat_t3_BG<-dat_t3[dat_t3$treatment=="B"|dat_t3$treatment=="G",]
+View(dat_t3_BG)
+t5BG<sapply(dat_t3_BG[,4:14],sum,na.rm=T)
+t5BGreorder<-c(t5BG[1],t5BG[6],t5BG[7],t5BG[4],t5BG[2],t5BG[3],t5BG[9],t5BG[8],t5BG[10],t5BG[5],t5BG[11])
+t5BGP<-paste(round(t5BGreorder/nrow(dat_t3_BG),2)*100,"%",sep="")
+t5BGtotal<-paste(t5BGreorder,"/",nrow(dat_t3_BG),sep=""
+)
+t5BGfinal<-paste(t5BGtotal,"(",t5BGP,")",sep="")
+GBGt5<-c("Group B&G 0.4 mg/g N=73",t5BGfinal)
+
+table5<-matrix(cbind(situation,GCt5,GFt5,GAt5,GDt5,GBGt5),ncol=6)
+write.table(table5, "H:/Joe/table5.txt", sep = ",", quote=F, eol = "\n", na = "", row.names = FALSE, col.names = FALSE)
+```
+
+##table 6##
+```{r,echo=FALSE}
+dat_t6<-dat_before[,c(1:4,23:33)]
+head(dat_t6)
+View(dat_t6)
+
+dat_t6_m<-dat_t6[dat_t6$Demo_3_SCR==1,]
+View(dat_t6_m)
+t6m<-sapply(dat_t6_m[,5:15],sum,na.rm=T)
+t6mreorder<-c(t6m[1],t6m[6],t6m[7],t6m[4],t6m[2],t6m[3],t6m[9],t6m[8],t6m[10],t6m[5],t6m[11])
+
+t6mp<-paste(round(t6mreorder/nrow(dat_t6_m),2)*100,"%",sep="")
+t6mtotal<-paste(t6mreorder,"(",t6mp,")",sep="")
+t6male<-c("Males N=149",t6mtotal)
+
+dat_t6_f<-dat_t6[dat_t6$Demo_3_SCR==2,]
+View(dat_t6_f)
+t6f<-sapply(dat_t6_f[,5:15],sum,na.rm=T)
+t6freorder<-c(t6f[1],t6f[6],t6f[7],t6f[4],t6f[2],t6f[3],t6f[9],t6f[8],t6f[10],t6f[5],t6f[11])
+t6fp<-paste(round(t6freorder/nrow(dat_t6_f),2)*100,"%",sep="")
+t6ftotal<-paste(t6freorder,"(",t6fp,")",sep="")
+t6female<-c("Females N=88",t6ftotal)
+
+table6<-matrix(cbind(situation,t6male,t6female),ncol=3)
+write.table(table6, "H:/Joe/table6.txt", sep = ",", quote=F, eol = "\n", na = "", row.names = FALSE, col.names = FALSE)
+
+```
+
+##table7##
+```{r,echo=FALSE}
+dat_t7<-dat_before[,c(1:5,23:33)]
+head(dat_t7)
+View(dat_t7)
+
+median(dat_t7$Demo_2_1_TEXT_SCR) ##44
+
+dat_t7_low<-dat_t7[dat_t7$Demo_2_1_TEXT_SCR < 44,]
+View(dat_t7_low)
+t7l<-sapply(dat_t7_low[,6:16],sum,na.rm=T)
+t7lreorder<-c(t7l[1],t7l[6],t7l[7],t7l[4],t7l[2],t7l[3],t7l[9],t7l[8],t7l[10],t7l[5],t7l[11])
+t7lp<-paste(round(t7lreorder/nrow(dat_t7_low),2)*100,"%",sep="")
+t7ltotal<-paste(t7lreorder,"(",t7lp,")",sep="")
+t7ltotalT<-c("Age Low N=117",t7ltotal)
+
+
+dat_t7_high<-dat_t7[dat_t7$Demo_2_1_TEXT_SCR>=44,]
+View(dat_t7_high)
+t7h<-sapply(dat_t7_high[,6:16],sum,na.rm=T)
+t7hreorder<-c(t7h[1],t7h[6],t7h[7],t7h[4],t7h[2],t7h[3],t7h[9],t7h[8],t7h[10],t7h[5],t7h[11])
+t7hp<-paste(round(t7hreorder/nrow(dat_t7_high),2)*100,"%",sep="")
+t7htotal<-paste(t7hreorder,"(",t7hp,")",sep="")
+t7tableh<-c("Age High N=120",t7htotal)
+
+table7<-matrix(cbind(situation,t7ltotalT,t7tableh),ncol=3)
+write.table(table7, "H:/Joe/table7.txt", sep = ",", quote=F, eol = "\n", na = "", row.names = FALSE, col.names = FALSE)
+
+```

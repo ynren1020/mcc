@@ -1,0 +1,118 @@
+---
+title: "noncomp0301"
+author: "Yanan"
+date: "March 1, 2017"
+output: html_document
+---
+```{r,echo=FALSE}
+library(dplyr)
+setwd("H:/Joe")
+dat<-read.csv("dataforyanan_20170208.csv",header = T,sep=",")
+head(dat)
+dat_t5<-dat[,c(1:3,23:33)]
+head(dat_t5)
+View(dat_t5)
+###create new variable seq_14_cue indicating if belongs to any one of the groups (seq_14_2,seq_14_4,seq_14_6)####
+dat_t5$seq_14_cue<-rep(NA,252)
+for (i in 1:nrow(dat_t5))
+  {
+ifelse(dat_t5$SEQ_14_2[i]==1|dat_t5$SEQ_14_4[i]==1|dat_t5$SEQ_14_6[i]==1,dat_t5$seq_14_cue[i]<-1,dat_t5$seq_14_cue[i]<-NA)
+}
+
+###create new variable seq_14_auto for automaticity indicating if belongs to any one of the groups (seq_14_9,seq_14_8)####
+dat_t5$seq_14_auto<-rep(NA,252)
+for (i in 1:nrow(dat_t5))
+  {
+ifelse(dat_t5$SEQ_14_9[i]==1|dat_t5$SEQ_14_8[i]==1,dat_t5$seq_14_auto[i]<-1,dat_t5$seq_14_auto[i]<-NA)
+}
+####subset by groups##
+dat_t5_C<-dat_t5[dat_t5$treatment=="C",]  
+View(dat_t5_C)  ##34
+t5C<-sapply(dat_t5_C[,15:16],sum,na.rm=T) ##cue=18 auto=7
+t5NC<-34-t5C
+
+dat_t5_F<-dat_t5[dat_t5$treatment=="F",]  
+View(dat_t5_F)  ##40
+t5F<-sapply(dat_t5_F[,15:16],sum,na.rm=T) ##cue=28 auto=4
+t5NF<-40-t5F
+
+dat_t5_A<-dat_t5[dat_t5$treatment=="A",]  
+View(dat_t5_A)  ##33
+t5A<-sapply(dat_t5_A[,15:16],sum,na.rm=T) ##cue=20 auto=4
+t5NA<-33-t5A
+
+dat_t5_D<-dat_t5[dat_t5$treatment=="D",]  
+View(dat_t5_D)  ##34
+t5D<-sapply(dat_t5_D[,15:16],sum,na.rm=T) ##cue=22 auto=9
+t5ND<-34-t5D
+
+dat_t5_BG<-dat_t5[dat_t5$treatment=="B"|dat_t5$treatment=="G",]
+View(dat_t5_BG) ##77
+t5BG<-sapply(dat_t5_BG[,15:16],sum,na.rm=T) ##cue=37 auto=16
+t5BG[1] ##37
+t5NBG<-77-t5BG
+
+testcue<-matrix(c(t5C[1],t5NC[1],t5F[1],t5NF[1],t5A[1],t5NA[1],t5D[1],t5ND[1],t5BG[1],t5NBG[1]),ncol=5)
+testauto<-matrix(c(t5C[2],t5NC[2],t5F[2],t5NF[2],t5A[2],t5NA[2],t5D[2],t5ND[2],t5BG[2],t5NBG[2]),ncol=5)
+
+pvcue=(round(fisher.test(testcue)$p.value,3)) #0.168
+pvauto=(round(fisher.test(testauto)$p.value,3)) #0.33
+
+```
+##2) need age,sex and FTND&WISDM scores by group to fill into this table##
+```{r, echo=FALSE}
+dat2<-dat[,c(1:7)]
+head(dat2)
+View(dat2)
+###subset by treatment###
+dat2_E<-dat2[dat2$treatment=="E",]
+nrow(dat2_E)
+dat2_C<-dat2[dat2$treatment=="C",]
+nrow(dat2_C)
+dat2_F<-dat2[dat2$treatment=="F",]
+nrow(dat2_F)
+dat2_A<-dat2[dat2$treatment=="A",]
+dat2_D<-dat2[dat2$treatment=="D",]
+dat2_BG<-dat2[dat2$treatment=="B"|dat2$treatment=="G",]
+
+t2E<-sapply(dat2_E[,5:7],mean,na.rm=T)
+t2C<-sapply(dat2_C[,5:7],mean,na.rm=T)
+t2F<-sapply(dat2_F[,5:7],mean,na.rm=T)
+t2A<-sapply(dat2_A[,5:7],mean,na.rm=T)
+t2D<-sapply(dat2_D[,5:7],mean,na.rm=T)
+t2BG<-sapply(dat2_BG[,5:7],mean,na.rm=T)
+
+
+dat2_male<-filter(dat2,Demo_3_SCR==1)
+View(dat2_male)
+
+dat2E_male<-filter(dat2_E,Demo_3_SCR==1)
+nrow(dat2E_male)
+dat2C_male<-filter(dat2_C,Demo_3_SCR==1)
+nrow(dat2C_male)
+dat2F_male<-filter(dat2_F,Demo_3_SCR==1)
+nrow(dat2F_male)
+dat2A_male<-filter(dat2_A,Demo_3_SCR==1)
+nrow(dat2A_male)
+dat2D_male<-filter(dat2_D,Demo_3_SCR==1)
+nrow(dat2D_male)
+dat2BG_male<-filter(dat2_BG,Demo_3_SCR==1)
+nrow(dat2BG_male)
+
+
+
+```
+
+###test for significance in table 10: is this decrease in non-compliance or conversely increase in compliance over time statistically significant?###
+```{r,echo=FALSE}
+dat3<-read.csv("table10trend.csv",header = T,sep=",")
+View(dat3)
+library(lattice)
+library(lme4)
+library(Matrix)
+xyplot(comp/total ~week, dat3)
+gm1 <- glmer(cbind(comp, total - comp) ~ week + (1|week),
+data = dat3, family = binomial)
+```
+
+

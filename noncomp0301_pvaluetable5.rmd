@@ -1,0 +1,168 @@
+---
+title: "noncomp0301"
+author: "Yanan"
+date: "March 1, 2017"
+output: html_document
+---
+
+##add pvalue to table 5 N=252##
+```{r, echo=FALSE}
+dat<-read.table("H:/joe/tablefull5_wop.txt",sep=",",header=F)
+View(dat)
+dat_table5<-read.table("H:/joe/tablefull5.txt",sep=",",header=F)
+View(dat_table5)
+dat_sub<-dat[2:12,2:6]
+View(dat_sub)
+dat_sub$GC<-as.numeric(as.character(dat_sub[,1]))
+dat_sub$GF<-as.numeric(as.character(dat_sub[,2]))
+dat_sub$GA<-as.numeric(as.character(dat_sub[,3]))
+dat_sub$GD<-as.numeric(as.character(dat_sub[,4]))
+dat_sub$GBG<-as.numeric(as.character(dat_sub[,5]))
+
+dat_sub$V2<-NULL
+dat_sub$V3<-NULL
+dat_sub$V4<-NULL
+dat_sub$V5<-NULL
+dat_sub$V6<-NULL
+
+dat_sub$GCno<-34-dat_sub$GC
+dat_sub$GFno<-40-dat_sub$GF
+dat_sub$GAno<-33-dat_sub$GA
+dat_sub$GDno<-34-dat_sub$GD
+dat_sub$GBGno<-77-dat_sub$GBG
+  
+test1 = matrix(c(dat_sub[1,1],dat_sub[1,6],dat_sub[1,2],dat_sub[1,7],dat_sub[1,3],dat_sub[1,8],dat_sub[1,4],dat_sub[1,9],dat_sub[1,5],dat_sub[1,10]), ncol=5)
+test1
+pv1=(round(fisher.test(test1)$p.value,3)) #0.076
+  
+test2 = matrix(c(dat_sub[2,1],dat_sub[2,6],dat_sub[2,2],dat_sub[2,7],dat_sub[2,3],dat_sub[2,8],dat_sub[2,4],dat_sub[2,9],dat_sub[2,5],dat_sub[2,10]), ncol=5)
+test2
+pv2=(round(fisher.test(test2)$p.value,3)) #0.086
+
+
+test3 = matrix(c(dat_sub[3,1],dat_sub[3,6],dat_sub[3,2],dat_sub[3,7],dat_sub[3,3],dat_sub[3,8],dat_sub[3,4],dat_sub[3,9],dat_sub[3,5],dat_sub[3,10]), ncol=5)
+test3
+pv3=(round(fisher.test(test3)$p.value,3))  #0.257
+
+
+test4 = matrix(c(dat_sub[4,1],dat_sub[4,6],dat_sub[4,2],dat_sub[4,7],dat_sub[4,3],dat_sub[4,8],dat_sub[4,4],dat_sub[4,9],dat_sub[4,5],dat_sub[4,10]), ncol=5)
+test4
+pv4=(round(fisher.test(test4)$p.value,3)) #0.390  
+
+
+test5 = matrix(c(dat_sub[5,1],dat_sub[5,6],dat_sub[5,2],dat_sub[5,7],dat_sub[5,3],dat_sub[5,8],dat_sub[5,4],dat_sub[5,9],dat_sub[5,5],dat_sub[5,10]), ncol=5)
+test5
+pv5=(round(fisher.test(test5)$p.value,3))  #0.737
+
+test6 = matrix(c(dat_sub[6,1],dat_sub[6,6],dat_sub[6,2],dat_sub[6,7],dat_sub[6,3],dat_sub[6,8],dat_sub[6,4],dat_sub[6,9],dat_sub[6,5],dat_sub[6,10]), ncol=5)
+test6
+pv6=(round(fisher.test(test6)$p.value,3)) #0.117
+
+test7 = matrix(c(dat_sub[7,1],dat_sub[7,6],dat_sub[7,2],dat_sub[7,7],dat_sub[7,3],dat_sub[7,8],dat_sub[7,4],dat_sub[7,9],dat_sub[7,5],dat_sub[7,10]), ncol=5)
+test7
+pv7=(round(fisher.test(test7)$p.value,3)) #0.291
+
+test8 = matrix(c(dat_sub[8,1],dat_sub[8,6],dat_sub[8,2],dat_sub[8,7],dat_sub[8,3],dat_sub[8,8],dat_sub[8,4],dat_sub[8,9],dat_sub[8,5],dat_sub[8,10]), ncol=5)
+test8
+pv8=(round(fisher.test(test8)$p.value,3)) #0.342
+
+test9 = matrix(c(dat_sub[9,1],dat_sub[9,6],dat_sub[9,2],dat_sub[9,7],dat_sub[9,3],dat_sub[9,8],dat_sub[9,4],dat_sub[9,9],dat_sub[9,5],dat_sub[9,10]), ncol=5)
+test9
+pv9=(round(fisher.test(test9)$p.value,3)) #0.519
+
+test10 = matrix(c(dat_sub[10,1],dat_sub[10,6],dat_sub[10,2],dat_sub[10,7],dat_sub[10,3],dat_sub[10,8],dat_sub[10,4],dat_sub[10,9],dat_sub[10,5],dat_sub[10,10]), ncol=5)
+test10
+pv10=(round(fisher.test(test10)$p.value,3)) #0.779
+
+test11 = matrix(c(dat_sub[11,1],dat_sub[11,6],dat_sub[11,2],dat_sub[11,7],dat_sub[11,3],dat_sub[11,8],dat_sub[11,4],dat_sub[11,9],dat_sub[11,5],dat_sub[11,10]), ncol=5)
+test11
+pv11=(round(fisher.test(test11)$p.value,3)) #0.106
+
+pv<-c("p.value",pv1,pv2,pv3,pv4,pv5,pv6,pv7,pv8,pv9,pv10,pv11)
+pv
+dat_table5$p.value<-pv
+write.table(dat_table5,"H:/joe/tablefull5_pvalue.txt",sep=",",quote=FALSE,row.names=FALSE, col.names=FALSE)
+
+```
+
+
+##add pvalue to table 5 N=237##
+```{r, echo=FALSE}
+dat<-read.table("H:/joe/table5_wop.txt",sep=",",header=F)
+View(dat)
+dat_table5<-read.table("H:/joe/table5.txt",sep=",",header=F)
+View(dat_table5)
+dat_sub<-dat[2:12,2:6]
+View(dat_sub)
+dat_sub$GC<-as.numeric(as.character(dat_sub[,1]))
+dat_sub$GF<-as.numeric(as.character(dat_sub[,2]))
+dat_sub$GA<-as.numeric(as.character(dat_sub[,3]))
+dat_sub$GD<-as.numeric(as.character(dat_sub[,4]))
+dat_sub$GBG<-as.numeric(as.character(dat_sub[,5]))
+
+dat_sub$V2<-NULL
+dat_sub$V3<-NULL
+dat_sub$V4<-NULL
+dat_sub$V5<-NULL
+dat_sub$V6<-NULL
+
+dat_sub$GCno<-33-dat_sub$GC
+dat_sub$GFno<-35-dat_sub$GF
+dat_sub$GAno<-30-dat_sub$GA
+dat_sub$GDno<-33-dat_sub$GD
+dat_sub$GBGno<-73-dat_sub$GBG
+  
+test1 = matrix(c(dat_sub[1,1],dat_sub[1,6],dat_sub[1,2],dat_sub[1,7],dat_sub[1,3],dat_sub[1,8],dat_sub[1,4],dat_sub[1,9],dat_sub[1,5],dat_sub[1,10]), ncol=5)
+test1
+pv1=(round(fisher.test(test1)$p.value,3)) #0.076
+  
+test2 = matrix(c(dat_sub[2,1],dat_sub[2,6],dat_sub[2,2],dat_sub[2,7],dat_sub[2,3],dat_sub[2,8],dat_sub[2,4],dat_sub[2,9],dat_sub[2,5],dat_sub[2,10]), ncol=5)
+test2
+pv2=(round(fisher.test(test2)$p.value,3)) #0.086
+
+
+test3 = matrix(c(dat_sub[3,1],dat_sub[3,6],dat_sub[3,2],dat_sub[3,7],dat_sub[3,3],dat_sub[3,8],dat_sub[3,4],dat_sub[3,9],dat_sub[3,5],dat_sub[3,10]), ncol=5)
+test3
+pv3=(round(fisher.test(test3)$p.value,3))  #0.257
+
+
+test4 = matrix(c(dat_sub[4,1],dat_sub[4,6],dat_sub[4,2],dat_sub[4,7],dat_sub[4,3],dat_sub[4,8],dat_sub[4,4],dat_sub[4,9],dat_sub[4,5],dat_sub[4,10]), ncol=5)
+test4
+pv4=(round(fisher.test(test4)$p.value,3)) #0.390  
+
+
+test5 = matrix(c(dat_sub[5,1],dat_sub[5,6],dat_sub[5,2],dat_sub[5,7],dat_sub[5,3],dat_sub[5,8],dat_sub[5,4],dat_sub[5,9],dat_sub[5,5],dat_sub[5,10]), ncol=5)
+test5
+pv5=(round(fisher.test(test5)$p.value,3))  #0.737
+
+test6 = matrix(c(dat_sub[6,1],dat_sub[6,6],dat_sub[6,2],dat_sub[6,7],dat_sub[6,3],dat_sub[6,8],dat_sub[6,4],dat_sub[6,9],dat_sub[6,5],dat_sub[6,10]), ncol=5)
+test6
+pv6=(round(fisher.test(test6)$p.value,3)) #0.117
+
+test7 = matrix(c(dat_sub[7,1],dat_sub[7,6],dat_sub[7,2],dat_sub[7,7],dat_sub[7,3],dat_sub[7,8],dat_sub[7,4],dat_sub[7,9],dat_sub[7,5],dat_sub[7,10]), ncol=5)
+test7
+pv7=(round(fisher.test(test7)$p.value,3)) #0.291
+
+test8 = matrix(c(dat_sub[8,1],dat_sub[8,6],dat_sub[8,2],dat_sub[8,7],dat_sub[8,3],dat_sub[8,8],dat_sub[8,4],dat_sub[8,9],dat_sub[8,5],dat_sub[8,10]), ncol=5)
+test8
+pv8=(round(fisher.test(test8)$p.value,3)) #0.342
+
+test9 = matrix(c(dat_sub[9,1],dat_sub[9,6],dat_sub[9,2],dat_sub[9,7],dat_sub[9,3],dat_sub[9,8],dat_sub[9,4],dat_sub[9,9],dat_sub[9,5],dat_sub[9,10]), ncol=5)
+test9
+pv9=(round(fisher.test(test9)$p.value,3)) #0.519
+
+test10 = matrix(c(dat_sub[10,1],dat_sub[10,6],dat_sub[10,2],dat_sub[10,7],dat_sub[10,3],dat_sub[10,8],dat_sub[10,4],dat_sub[10,9],dat_sub[10,5],dat_sub[10,10]), ncol=5)
+test10
+pv10=(round(fisher.test(test10)$p.value,3)) #0.779
+
+test11 = matrix(c(dat_sub[11,1],dat_sub[11,6],dat_sub[11,2],dat_sub[11,7],dat_sub[11,3],dat_sub[11,8],dat_sub[11,4],dat_sub[11,9],dat_sub[11,5],dat_sub[11,10]), ncol=5)
+test11
+pv11=(round(fisher.test(test11)$p.value,3)) #0.106
+
+pv<-c("p.value",pv1,pv2,pv3,pv4,pv5,pv6,pv7,pv8,pv9,pv10,pv11)
+pv
+dat_table5$p.value<-pv
+write.table(dat_table5,"H:/joe/table5_pvalue.txt",sep=",",quote=FALSE,row.names=FALSE, col.names=FALSE)
+
+```
+

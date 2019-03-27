@@ -1,0 +1,232 @@
+---
+title: "noncomp0220"
+author: "Yanan"
+date: "February 20, 2017"
+output: word_document
+---
+##table10##
+```{r setup, include=FALSE}
+library(dplyr)
+setwd("H:/Joe")
+#setwd("D:/Biostatistics/2017SpringRA/joe/dataset")
+dat<-read.csv("dataforyanan_20170208.csv",header = T,sep=",")
+head(dat)
+
+##subset by date#
+#class(dat$eos_date)
+#dat$eos_date<-as.Date(dat$eos_date,"%m/%d/%Y")
+#dat_before<-subset(dat,eos_date < as.Date("2014-07-08"))
+#View(dat_before)
+
+##Table 10##
+dat_t10<-dat[,c(1,8:19)]
+head(dat_t10)
+View(dat_t10)
+
+##subset by week##
+dat_t10_w1<-dat_t10[,c(1:3)]   ##251
+dat_t10_w2<-dat_t10[,c(1,4,5)] ##250
+dat_t10_w3<-dat_t10[,c(1,6,7)]
+dat_t10_w4<-dat_t10[,c(1,8,9)] ##251
+dat_t10_w5<-dat_t10[,c(1,10,11)] ##251
+dat_t10_w6<-dat_t10[,c(1,12,13)]
+
+View(dat_t10_w6)
+
+##compliance w1##
+Nw1comp<-nrow(dat_t10_w1[dat_t10_w1$non_study_cpd_wk1==0,])
+pw1comp<-paste(round(Nw1comp/(nrow(dat_t10_w1)-1),2)*100,"%",sep="")
+tw1comp<-paste(Nw1comp,"(",pw1comp,")",sep="")
+
+Nw1non<-nrow(dat_t10_w1)-1-Nw1comp
+pw1non<-paste(round(Nw1non/(nrow(dat_t10_w1)-1),2)*100,"%",sep="")
+tw1non<-paste(Nw1non,"(",pw1non,")",sep="")
+w1<-c("Week1",tw1comp,tw1non,"N=251")
+
+##w2##
+Nw2comp<-nrow(dat_t10_w2[dat_t10_w2$non_study_cpd_wk2==0,])
+pw2comp<-paste(round(Nw2comp/(nrow(dat_t10_w2)-2),2)*100,"%",sep="")
+tw2comp<-paste(Nw2comp,"(",pw2comp,")",sep="")
+
+Nw2non<-nrow(dat_t10_w2)-2-Nw2comp
+pw2non<-paste(round(Nw2non/(nrow(dat_t10_w2)-2),2)*100,"%",sep="")
+tw2non<-paste(Nw2non,"(",pw2non,")",sep="")
+w2<-c("Week2",tw2comp,tw2non,"N=250")
+
+##w3##
+Nw3comp<-nrow(dat_t10_w3[dat_t10_w3$non_study_cpd_wk3==0,])
+pw3comp<-paste(round(Nw3comp/nrow(dat_t10_w3),2)*100,"%",sep="")
+tw3comp<-paste(Nw3comp,"(",pw3comp,")",sep="")
+
+Nw3non<-nrow(dat_t10_w3)-Nw3comp
+pw3non<-paste(round(Nw3non/nrow(dat_t10_w3),2)*100,"%",sep="")
+tw3non<-paste(Nw3non,"(",pw3non,")",sep="")
+w3<-c("Week3",tw3comp,tw3non,"N=252")
+
+##w4##
+Nw4comp<-nrow(dat_t10_w4[dat_t10_w4$non_study_cpd_wk4==0,])
+pw4comp<-paste(round(Nw4comp/(nrow(dat_t10_w4)-1),2)*100,"%",sep="")
+tw4comp<-paste(Nw4comp,"(",pw4comp,")",sep="")
+
+Nw4non<-nrow(dat_t10_w4)-1-Nw4comp
+pw4non<-paste(round(Nw4non/(nrow(dat_t10_w4)-1),2)*100,"%",sep="")
+tw4non<-paste(Nw4non,"(",pw4non,")",sep="")
+w4<-c("Week4",tw4comp,tw4non,"N=251")
+
+##w5##
+Nw5comp<-nrow(dat_t10_w5[dat_t10_w5$non_study_cpd_wk5==0,])
+pw5comp<-paste(round(Nw5comp/(nrow(dat_t10_w5)-1),2)*100,"%",sep="")
+tw5comp<-paste(Nw5comp,"(",pw5comp,")",sep="")
+
+Nw5non<-nrow(dat_t10_w5)-1-Nw5comp
+pw5non<-paste(round(Nw5non/(nrow(dat_t10_w5)-1),2)*100,"%",sep="")
+tw5non<-paste(Nw5non,"(",pw5non,")",sep="")
+w5<-c("Week5",tw5comp,tw5non,"N=251")
+
+##w6##
+Nw6comp<-nrow(dat_t10_w6[dat_t10_w6$non_study_cpd_wk6==0,])
+pw6comp<-paste(round(Nw6comp/nrow(dat_t10_w6),2)*100,"%",sep="")
+tw6comp<-paste(Nw6comp,"(",pw6comp,")",sep="")
+
+Nw6non<-nrow(dat_t10_w6)-Nw6comp
+pw6non<-paste(round(Nw6non/nrow(dat_t10_w6),2)*100,"%",sep="")
+tw6non<-paste(Nw6non,"(",pw6non,")",sep="")
+w6<-c("Week6",tw6comp,tw6non,"N=252")
+group<-c(" ", "No-Non Study Cigarettes (Compliance)","Non-Study Cigarette Use (Non-Compliance)","Total Participants")
+t10<-matrix(cbind(group,w1,w2,w3,w4,w5,w6),ncol=7)
+write.table(t10,"H:/joe/tablefull10.txt",sep=",",quote=FALSE,row.names=FALSE, col.names=FALSE)
+
+```
+
+##table 11, for N=237##
+```{r,echo=FALSE}
+library(dplyr)
+setwd("H:/Joe")
+#setwd("D:/Biostatistics/2017SpringRA/joe/dataset")
+dat<-read.csv("dataforyanan_20170208.csv",header = T,sep=",")
+head(dat)
+
+##subset by date#
+class(dat$eos_date)
+dat$eos_date<-as.Date(dat$eos_date,"%m/%d/%Y")
+dat_before<-subset(dat,eos_date < as.Date("2014-07-08"))
+View(dat_before)
+
+##Table 11##
+dat_t11<-dat_before[,c(1,2,8:19)]
+head(dat_t11)
+View(dat_t11)
+
+##subset by group##
+dat_t11_E<-dat_t11[dat_t11$treatment=="E",]
+View(dat_t11_E)
+sum(dat_t11_E$non_study_cpd_wk1)/33
+```
+
+
+##table 11, for N=252##
+```{r,echo=FALSE}
+library(dplyr)
+setwd("H:/Joe")
+#setwd("D:/Biostatistics/2017SpringRA/joe/dataset")
+dat<-read.csv("dataforyanan_20170208.csv",header = T,sep=",")
+head(dat)
+
+##Table 11##
+dat_t11<-dat[,c(1,2,8:19)]
+head(dat_t11)
+View(dat_t11)
+
+##subset by group##
+dat_t11_E<-dat_t11[dat_t11$treatment=="E",]
+View(dat_t11_E)
+w1E<-sum(dat_t11_E$non_study_cpd_wk1)/nrow(dat_t11_E)
+w2E<-sum(dat_t11_E$non_study_cpd_wk2)/nrow(dat_t11_E)
+w3E<-sum(dat_t11_E$non_study_cpd_wk3)/nrow(dat_t11_E)
+w4E<-sum(dat_t11_E$non_study_cpd_wk4)/nrow(dat_t11_E)
+w5E<-sum(dat_t11_E$non_study_cpd_wk5)/nrow(dat_t11_E)
+w6E<-sum(dat_t11_E$non_study_cpd_wk6)/nrow(dat_t11_E)
+avgwE<-mean(c(w1E,w2E,w3E,w4E,w5E,w6E))
+GEt11<-c("Group E Usual Brand N=34",round(w1E,2),round(w2E,2),round(w3E,2),round(w4E,2),round(w5E,2),round(w6E,2),round(avgwE,2))
+
+##C##
+dat_t11_C<-dat_t11[dat_t11$treatment=="C",]
+View(dat_t11_C)
+w1C<-sum(dat_t11_C$non_study_cpd_wk1)/nrow(dat_t11_C)
+w2C<-sum(dat_t11_C$non_study_cpd_wk2)/nrow(dat_t11_C)
+w3C<-sum(dat_t11_C$non_study_cpd_wk3)/nrow(dat_t11_C)
+w4C<-sum(dat_t11_C$non_study_cpd_wk4)/nrow(dat_t11_C)
+w5C<-sum(dat_t11_C$non_study_cpd_wk5)/nrow(dat_t11_C)
+w6C<-sum(dat_t11_C$non_study_cpd_wk6)/nrow(dat_t11_C)
+avgwC<-mean(c(w1C,w2C,w3C,w4C,w5C,w6C))
+GCt11<-c("Group C 15.8 mg/g N=34",round(w1C,2),round(w2C,2),round(w3C,2),round(w4C,2),round(w5C,2),round(w6C,2),round(avgwC,2))
+
+##F##
+dat_t11_F<-dat_t11[dat_t11$treatment=="F",]
+dat_t11_F[dat_t11_F==9999]<-NA
+View(dat_t11_F)
+w1F<-sum(dat_t11_F$non_study_cpd_wk1,na.rm=T)/nrow(dat_t11_F)
+w2F<-sum(dat_t11_F$non_study_cpd_wk2,na.rm=T)/nrow(dat_t11_F)
+w3F<-sum(dat_t11_F$non_study_cpd_wk3,na.rm=T)/nrow(dat_t11_F)
+w4F<-sum(dat_t11_F$non_study_cpd_wk4,na.rm=T)/nrow(dat_t11_F)
+w5F<-sum(dat_t11_F$non_study_cpd_wk5,na.rm=T)/nrow(dat_t11_F)
+w6F<-sum(dat_t11_F$non_study_cpd_wk6,na.rm=T)/nrow(dat_t11_F)
+avgwF<-mean(c(w1F,w2F,w3F,w4F,w5F,w6F))
+GFt11<-c("Group F 5.2 mg/g N=40",round(w1F,2),round(w2F,2),round(w3F,2),round(w4F,2),round(w5F,2),round(w6F,2),round(avgwF,2))
+
+##A##
+dat_t11_A<-dat_t11[dat_t11$treatment=="A",]
+dat_t11_A[dat_t11_A==9999]<-NA
+View(dat_t11_A)
+w1A<-sum(dat_t11_A$non_study_cpd_wk1,na.rm=T)/nrow(dat_t11_A)
+w2A<-sum(dat_t11_A$non_study_cpd_wk2,na.rm=T)/nrow(dat_t11_A)
+w3A<-sum(dat_t11_A$non_study_cpd_wk3,na.rm=T)/nrow(dat_t11_A)
+w4A<-sum(dat_t11_A$non_study_cpd_wk4,na.rm=T)/nrow(dat_t11_A)
+w5A<-sum(dat_t11_A$non_study_cpd_wk5,na.rm=T)/nrow(dat_t11_A)
+w6A<-sum(dat_t11_A$non_study_cpd_wk6,na.rm=T)/nrow(dat_t11_A)
+avgwA<-mean(c(w1A,w2A,w3A,w4A,w5A,w6A))
+GAt11<-c("Group A 2.4 mg/g N=33",round(w1A,2),round(w2A,2),round(w3A,2),round(w4A,2),round(w5A,2),round(w6A,2),round(avgwA,2))
+
+##D##
+dat_t11_D<-dat_t11[dat_t11$treatment=="D",]
+dat_t11_D[dat_t11_D==9999]<-NA
+View(dat_t11_D)
+w1D<-sum(dat_t11_D$non_study_cpd_wk1,na.rm=T)/nrow(dat_t11_D)
+w2D<-sum(dat_t11_D$non_study_cpd_wk2,na.rm=T)/nrow(dat_t11_D)
+w3D<-sum(dat_t11_D$non_study_cpd_wk3,na.rm=T)/nrow(dat_t11_D)
+w4D<-sum(dat_t11_D$non_study_cpd_wk4,na.rm=T)/nrow(dat_t11_D)
+w5D<-sum(dat_t11_D$non_study_cpd_wk5,na.rm=T)/nrow(dat_t11_D)
+w6D<-sum(dat_t11_D$non_study_cpd_wk6,na.rm=T)/nrow(dat_t11_D)
+avgwD<-mean(c(w1D,w2D,w3D,w4D,w5D,w6D))
+GDt11<-c("Group D 1.3 mg/g N=34",round(w1D,2),round(w2D,2),round(w3D,2),round(w4D,2),round(w5D,2),round(w6D,2),round(avgwD,2))
+
+##BG##
+dat_t11_BG<-dat_t11[dat_t11$treatment=="B"|dat_t11$treatment=="G",]
+dat_t11_BG[dat_t11_BG==9995]<-NA
+View(dat_t11_BG)
+w1BG<-sum(dat_t11_BG$non_study_cpd_wk1,na.rm=T)/nrow(dat_t11_BG)
+w2BG<-sum(dat_t11_BG$non_study_cpd_wk2,na.rm=T)/nrow(dat_t11_BG)
+w3BG<-sum(dat_t11_BG$non_study_cpd_wk3,na.rm=T)/nrow(dat_t11_BG)
+w4BG<-sum(dat_t11_BG$non_study_cpd_wk4,na.rm=T)/nrow(dat_t11_BG)
+w5BG<-sum(dat_t11_BG$non_study_cpd_wk5,na.rm=T)/nrow(dat_t11_BG)
+w6BG<-sum(dat_t11_BG$non_study_cpd_wk6,na.rm=T)/nrow(dat_t11_BG)
+avgwBG<-mean(c(w1BG,w2BG,w3BG,w4BG,w5BG,w6BG))
+GBGt11<-c("Group B&G 0.4 mg/g N=77",round(w1BG,2),round(w2BG,2),round(w3BG,2),round(w4BG,2),round(w5BG,2),round(w6BG,2),round(avgwBG,2))
+
+##total##
+w1total<-mean(c(w1E,w1C,w1F,w1A,w1D,w1BG))
+w2total<-mean(c(w2E,w2C,w2F,w2A,w2D,w2BG))
+w3total<-mean(c(w3E,w3C,w3F,w3A,w3D,w3BG))
+w4total<-mean(c(w4E,w4C,w4F,w4A,w4D,w4BG))
+w5total<-mean(c(w5E,w5C,w5F,w5A,w5D,w5BG))
+w6total<-mean(c(w6E,w6C,w6F,w6A,w6D,w6BG))
+avgwtotal<-mean(c(w1total,w2total,w3total,w4total,w5total,w6total))
+Gtotal<-c("Total Average Non-Study Cig",round(w1total,2),round(w2total,2),round(w3total,2),round(w4total,2),round(w5total,2),round(w6total,2),round(avgwtotal,2))
+
+group11<-c("Average Non-Study CPD","Week 1","Week 2","Week 3","Week 4","Week 5","Week 6","Average all weeks")
+t11<-matrix(cbind(group11,GEt11,GCt11,GFt11,GAt11,GDt11,GBGt11,Gtotal),ncol=8)
+
+write.table(t11,"H:/joe/tablefull11.txt",sep=",",quote=FALSE,row.names=FALSE, col.names=FALSE)
+
+
+```

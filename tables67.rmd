@@ -1,0 +1,148 @@
+---
+title: "joe"
+author: "Yanan Ren"
+date: "2017Äê2ÔÂ16ÈÕ"
+output: word_document
+---
+##table6
+```{r,echo=FALSE}
+dat<-read.table("D:/Biostatistics/2017SpringRA/joe/table6_wop.txt",sep=",",header=F)
+View(dat)
+dat_table6<-read.table("D:/Biostatistics/2017SpringRA/joe/table6.txt",sep=",",header=F)
+View(dat_table6)
+dat_sub<-dat[2:12,2:3]
+View(dat_sub)
+dat_sub$male<-as.numeric(as.character(dat_sub[,1]))
+dat_sub$female<-as.numeric(as.character(dat_sub[,2]))
+dat_sub$V2<-NULL
+dat_sub$V3<-NULL
+dat_sub$maleno<-149-dat_sub$male
+dat_sub$femaleno<-88-dat_sub$female
+
+  
+test1 = matrix(c(dat_sub[1,1],dat_sub[1,3],dat_sub[1,2],dat_sub[1,4]), ncol=2)
+test1
+pv1=(round(fisher.test(test1)$p.value,3))
+  
+test2 = matrix(c(dat_sub[2,1],dat_sub[2,3],dat_sub[2,2],dat_sub[2,4]), ncol=2)
+test2
+pv2=(round(fisher.test(test2)$p.value,3))
+
+
+test3 = matrix(c(dat_sub[3,1],dat_sub[3,3],dat_sub[3,2],dat_sub[3,4]), ncol=2)
+test3
+pv3=(round(fisher.test(test3)$p.value,3))  
+
+
+test4 = matrix(c(dat_sub[4,1],dat_sub[4,3],dat_sub[4,2],dat_sub[4,4]), ncol=2)
+test4
+pv4=(round(fisher.test(test4)$p.value,3))  
+
+
+test5 = matrix(c(dat_sub[5,1],dat_sub[5,3],dat_sub[5,2],dat_sub[5,4]), ncol=2)
+test5
+pv5=(round(fisher.test(test5)$p.value,3))  
+
+test6 = matrix(c(dat_sub[6,1],dat_sub[6,3],dat_sub[6,2],dat_sub[6,4]), ncol=2)
+test6
+pv6=(round(fisher.test(test6)$p.value,3))
+
+test7 = matrix(c(dat_sub[7,1],dat_sub[7,3],dat_sub[7,2],dat_sub[7,4]), ncol=2)
+test7
+pv7=(round(fisher.test(test7)$p.value,3))
+
+test8 = matrix(c(dat_sub[8,1],dat_sub[8,3],dat_sub[8,2],dat_sub[8,4]), ncol=2)
+test8
+pv8=(round(fisher.test(test8)$p.value,3))
+
+test9 = matrix(c(dat_sub[9,1],dat_sub[9,3],dat_sub[9,2],dat_sub[9,4]), ncol=2)
+test9
+pv9=(round(fisher.test(test9)$p.value,3))
+
+test10 = matrix(c(dat_sub[10,1],dat_sub[10,3],dat_sub[10,2],dat_sub[10,4]), ncol=2)
+test10
+pv10=(round(fisher.test(test10)$p.value,3))
+
+test11 = matrix(c(dat_sub[11,1],dat_sub[11,3],dat_sub[11,2],dat_sub[11,4]), ncol=2)
+test11
+pv11=(round(fisher.test(test11)$p.value,3))
+
+pv<-c("p.value",pv1,pv2,pv3,pv4,pv5,pv6,pv7,pv8,pv9,pv10,pv11)
+pv
+dat_table6$p.value<-pv
+write.table(dat_table6,"D:/Biostatistics/2017SpringRA/joe/table6_pvalue.txt",sep=",",quote=FALSE,row.names=FALSE, col.names=FALSE)
+```
+
+##table7##
+```{r,echo=FALSE}
+dat<-read.table("D:/Biostatistics/2017SpringRA/joe/table7_wop.txt",sep=",",header=F)
+View(dat)
+dat_table7<-read.table("D:/Biostatistics/2017SpringRA/joe/table7.txt",sep=",",header=F)
+View(dat_table7)
+dat_sub<-dat[2:12,2:3]
+View(dat_sub)
+dat_sub$low<-as.numeric(as.character(dat_sub[,1]))
+dat_sub$high<-as.numeric(as.character(dat_sub[,2]))
+dat_sub$V2<-NULL
+dat_sub$V3<-NULL
+dat_sub$lowno<-117-dat_sub$low
+dat_sub$highno<-120-dat_sub$high
+
+  
+test1 = matrix(c(dat_sub[1,1],dat_sub[1,3],dat_sub[1,2],dat_sub[1,4]), ncol=2)
+test1
+pv1=(round(fisher.test(test1)$p.value,3))
+  
+test2 = matrix(c(dat_sub[2,1],dat_sub[2,3],dat_sub[2,2],dat_sub[2,4]), ncol=2)
+test2
+pv2=(round(fisher.test(test2)$p.value,3))
+
+
+test3 = matrix(c(dat_sub[3,1],dat_sub[3,3],dat_sub[3,2],dat_sub[3,4]), ncol=2)
+test3
+pv3=(round(fisher.test(test3)$p.value,3))  
+
+
+test4 = matrix(c(dat_sub[4,1],dat_sub[4,3],dat_sub[4,2],dat_sub[4,4]), ncol=2)
+test4
+pv4=(round(fisher.test(test4)$p.value,3))  
+
+
+test5 = matrix(c(dat_sub[5,1],dat_sub[5,3],dat_sub[5,2],dat_sub[5,4]), ncol=2)
+test5
+pv5=(round(fisher.test(test5)$p.value,3))  
+
+test6 = matrix(c(dat_sub[6,1],dat_sub[6,3],dat_sub[6,2],dat_sub[6,4]), ncol=2)
+test6
+pv6=(round(fisher.test(test6)$p.value,3))
+
+test7 = matrix(c(dat_sub[7,1],dat_sub[7,3],dat_sub[7,2],dat_sub[7,4]), ncol=2)
+test7
+pv7=(round(fisher.test(test7)$p.value,3))
+
+test8 = matrix(c(dat_sub[8,1],dat_sub[8,3],dat_sub[8,2],dat_sub[8,4]), ncol=2)
+test8
+pv8=(round(fisher.test(test8)$p.value,3))
+
+test9 = matrix(c(dat_sub[9,1],dat_sub[9,3],dat_sub[9,2],dat_sub[9,4]), ncol=2)
+test9
+pv9=(round(fisher.test(test9)$p.value,3))
+
+test10 = matrix(c(dat_sub[10,1],dat_sub[10,3],dat_sub[10,2],dat_sub[10,4]), ncol=2)
+test10
+pv10=(round(fisher.test(test10)$p.value,3))
+
+test11 = matrix(c(dat_sub[11,1],dat_sub[11,3],dat_sub[11,2],dat_sub[11,4]), ncol=2)
+test11
+pv11=(round(fisher.test(test11)$p.value,3))
+
+pv<-c("p.value",pv1,pv2,pv3,pv4,pv5,pv6,pv7,pv8,pv9,pv10,pv11)
+pv
+dat_table7$p.value<-pv
+write.table(dat_table7,"D:/Biostatistics/2017SpringRA/joe/table7_pvalue.txt",sep=",",quote=FALSE,row.names=FALSE, col.names=FALSE)
+
+
+
+
+
+```
